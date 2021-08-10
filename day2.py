@@ -1,5 +1,3 @@
-import re
-
 inputs = [
 "9-12 q: qqqxhnhdmqqqqjz",
 "12-16 z: zzzzzznwlzzjzdzf",
@@ -1005,6 +1003,8 @@ inputs = [
 
 print(inputs[0].split())
 validPassword = 0
+validPasswordp2 = 0
+testp2 = 0
 
 for i in inputs:
     i = i.split()
@@ -1021,4 +1021,12 @@ for i in inputs:
     if letterCount >= low and letterCount <= high:
         validPassword += 1 
 
+    if i[2][low-1] == word and i[2][high-1] != word:
+        validPasswordp2 += 1
+    elif i[2][high-1] == word and i[2][low-1] != word:
+        validPasswordp2 += 1
+    
+    
+
 print(validPassword)
+print(validPasswordp2)
