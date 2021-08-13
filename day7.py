@@ -598,15 +598,11 @@ plaid bronze bags contain 4 bright coral bags, 1 dotted crimson bag, 1 mirrored 
 """
 def downup(find):
     for k, v in bagsDict.items():
-        if find in v:
-            v = v.replace(',','')
-            a = re.split(r'\d+ ',v)
-            downup(k)
-            bagsSet.add(k)
-
-            print(v)
-            print(a)
-    pass
+        for bagsChild in v:
+            if find in bagsChild:
+                bagsSet.add(k)
+                downup(k)
+    
           
 bags = inputs.split('.\n')
 bagsDict = {}
@@ -614,11 +610,45 @@ goldbags = 0
 bagsSet = set()
 
 for bag in bags[:-1]:
-    a = bag.split(" contain ")
-    bagsDict[a[0]] = a[1]
+    a = bag.replace(',',' :').replace("bags","bag").split(" contain ")
+    b = a[1].split(' : ')
+    bagsDict[a[0]] = b
 
-downup('shiny gold')
 
-print(len(bagsSet))
+downup("shiny gold")
 
-#109
+
+#part 2 - string numbers are all not > 10 
+sum = 0
+def updown(find):
+    for i in bagsSet:
+        for j in bagsDict[i]:
+            bagsinside = 0
+            name = j[2:]
+            count = int(j[0])
+            temp = bagsDict[name]
+            for k in temp:
+                if k[0] == 'n':
+                    sum += count
+                    break
+                else:
+                    bagsinside += int(k[0])
+            sum += (count * bagsinside)
+    return
+
+def downup(bag):
+    count = 0
+    parentBag = bagsDict[bag]
+    print(parentBag)
+    if 'other' in parentBag[0]:
+        return 0
+    else:
+        for bag in parentBag:
+            bagType = int(bag[0])
+            bagUpper = downup(bag[2:])
+            count += bagType * bagUpper + bagType
+    return count
+
+print(downup('shiny gold bag'))
+#2177 too low
+#16187 too low
