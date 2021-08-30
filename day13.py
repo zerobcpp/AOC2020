@@ -89,7 +89,7 @@ tot = 0
 for t, modu in arr:
     Ni = totalProduct // modu
     minverse = modinverse(Ni, modu)
-    assert minverse*Ni % modu == 1
+    #assert minverse*Ni % modu == 1
     #print(Ni, minverse, Ni*minverse, sep = '          ')
     xi = Ni * minverse * t
     tot += (Ni*minverse*xi)
